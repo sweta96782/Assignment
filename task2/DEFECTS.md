@@ -76,3 +76,29 @@ Use `i + SEQ_LEN // 2` for the target in `SeqDataset.__getitem__`, the invalid-t
 
 **Decision:**
 The centre epoch is the intended prediction target, consistent with the model documentation and output head.
+
+## Defect 4: Transformer attends across the batch instead of the sequence
+
+**Location:** SleepTransformer.__init__()
+
+**Original code:**
+`nn.TransformerEncoderLayer(d_model=d, nhead=4, dim_feedforward=128, dropout=0.1)`
+
+**Problem:**
+PyTorch defaults to `batch_first=False`, meaning the Transformer expects input shaped as (sequence length, batch size, features). However, the model supplies input shaped as (batch size, sequence length, features).
+
+**Evidence from the original model:**
+- Transformer batch_first setting: False
+- Maximum prediction difference for sample 0 when evaluated in a batch of 8 versus individually: 0.0474985
+
+**Effect on the pipeline:**
+The Transformer attends across samples in the batch instead of attending across the 11 epochs within each sample. Consequently, predictions can depend on unrelated batch-mates, and the intended temporal sequence modelling is not performed correctly.
+
+**Correction:**
+Set `batch_first=True` in nn.TransformerEncoderLayer so the input dimensions are interpreted correctly.
+
+**Verification:**
+Repeat the batch-versus-individual prediction experiment. The maximum prediction difference should be approximately zero in evaluation mode.
+
+**Decision:**
+Use batch_first=True to match the (B, L, d) tensor format produced by the epoch encoder.

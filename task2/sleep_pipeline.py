@@ -138,7 +138,13 @@ class SleepTransformer(nn.Module):
     def __init__(self, n_ch, d=D_MODEL, n_classes=N_CLASSES):
         super().__init__()
         self.encoder = EpochEncoder(n_ch, d)
-        layer = nn.TransformerEncoderLayer(d_model=d, nhead=4, dim_feedforward=128, dropout=0.1)
+        layer = nn.TransformerEncoderLayer(
+            d_model=d,
+            nhead=4,
+            dim_feedforward=128,
+            dropout=0.1,
+            batch_first=True
+        )
         self.transformer = nn.TransformerEncoder(layer, num_layers=2)
         self.pos = PositionalEncoding(d)
         self.head = nn.Linear(d, n_classes)
