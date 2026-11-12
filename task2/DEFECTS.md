@@ -25,3 +25,27 @@ Express the threshold in volts: `REJECT_PTP = 500e-6`.
 
 **Decision:**
 Retain the intended 500 µV threshold and convert it to volts to match MNE's output units.
+
+## Defect 2: Unscored annotations incorrectly classified as Wake
+
+**Location:** `sleep_pipeline.py`
+
+**Original code:**
+`y[start:stop] = STAGE_MAP.get(desc, 0)`
+
+**Problem:**
+The default value of 0 assigns unknown annotations to Wake. However, 0 is a valid Wake label. Unscored annotations and movement-time annotations should not be treated as Wake.
+
+**Evidence from the original dataset:**
+- Sleep stage ?: 2177.5 minutes
+- Movement time: 17.5 minutes
+- Total unknown annotation duration: 2195 minutes
+
+**Effect on the pipeline:**
+Unscored and movement-time epochs are incorrectly included as Wake-labelled examples. This introduces label noise and can distort the class distribution and model performance.
+
+**Correction:**
+Initialise the label array with -1, use -1 as the default for unknown annotations, and exclude training examples whose target epoch has an invalid label.
+
+**Decision:**
+Only the five recognised sleep stages are used as classification targets. Unscored and movement-time annotations are excluded from supervised target labels.

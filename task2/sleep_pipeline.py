@@ -72,10 +72,10 @@ def load_recording(psg_file, hyp_file):
 
     # one label per 30-s epoch from the hypnogram
     annot = mne.read_annotations(hyp_file)
-    y = np.zeros(n_ep, dtype=np.int64)
+    y = np.full(n_ep, -1, dtype=np.int64)
     for onset, dur, desc in zip(annot.onset, annot.duration, annot.description):
         start, stop = int(onset // EPOCH_SEC), int((onset + dur) // EPOCH_SEC)
-        y[start:stop] = STAGE_MAP.get(desc, 0)
+        y[start:stop] = STAGE_MAP.get(desc, -1)
 
     # drop electrode pops
     keep = np.ptp(X, axis=-1).max(axis=1) < REJECT_PTP
@@ -92,7 +92,8 @@ class SeqDataset(torch.utils.data.Dataset):
     def __init__(self, recordings):
         self.recs = recordings
         self.index = [(r, i) for r, (X, y) in enumerate(recordings)
-                      for i in range(len(y) - SEQ_LEN + 1)]
+                      for i in range(len(y) - SEQ_LEN + 1)
+                      if y[i + SEQ_LEN - 1] >= 0]
 
     def __len__(self):
         return len(self.index)
