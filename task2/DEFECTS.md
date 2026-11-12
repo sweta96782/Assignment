@@ -112,3 +112,13 @@ Use batch_first=True to match the (B, L, d) tensor format produced by the epoch 
 **Impact:** Without positional encoding before self-attention, the model cannot effectively learn the temporal order of sleep epochs. This can limit its ability to capture sleep-stage transitions and temporal dependencies.
 
 **Correction:** Positional encoding was moved before the Transformer encoder so that temporal position information is available during self-attention.
+
+### Defect 6: Per-epoch standardisation removes amplitude information
+
+**Problem:** Each EEG epoch was independently standardised to approximately zero mean and unit standard deviation. This removes relative amplitude differences between epochs, which may contain useful information for distinguishing sleep stages.
+
+**Evidence:** In the original pipeline, the measured standard deviations for W, N1, N2, N3 and REM were approximately 0.999. After applying per-recording, per-channel standardisation, the respective values were 1.036, 0.632, 0.731, 1.335 and 0.667. N3 showed the largest standard deviation in the inspected recording.
+
+**Impact:** Independent epoch-wise normalisation can suppress amplitude-related characteristics of sleep stages, particularly the prominent slow-wave activity associated with N3 sleep.
+
+**Correction:** Replaced per-epoch standardisation with per-recording, per-channel standardisation across epochs and time samples. This preserves relative amplitude variation within each recording and channel.

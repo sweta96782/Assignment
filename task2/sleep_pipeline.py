@@ -82,7 +82,7 @@ def load_recording(psg_file, hyp_file):
     X, y = X[keep], y[keep]
 
     # standardise each epoch so the network is insensitive to amplitude drift
-    X = (X - X.mean(axis=-1, keepdims=True)) / (X.std(axis=-1, keepdims=True) + 1e-8)
+    X = (X - X.mean(axis=(0, 2), keepdims=True)) / (X.std(axis=(0, 2), keepdims=True) + 1e-8)
     return X.astype(np.float32), y
 
 
