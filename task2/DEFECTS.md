@@ -49,3 +49,30 @@ Initialise the label array with -1, use -1 as the default for unknown annotation
 
 **Decision:**
 Only the five recognised sleep stages are used as classification targets. Unscored and movement-time annotations are excluded from supervised target labels.
+
+## Defect 3: Sequence target uses the last epoch instead of the centre epoch
+
+**Location:** `SeqDataset.__getitem__` and training-label calculation in `main()`.
+
+**Original code:**
+`int(y[i + SEQ_LEN - 1])`
+
+**Problem:**
+The documentation states that the model predicts the centre epoch, and the model selects the centre representation using `z[:, L // 2]`. However, the dataset supplies the last epoch's label.
+
+**Evidence from the original dataset:**
+For recording 0, sequence starting at index 1011:
+- Dataset label: 1 (N1)
+- Centre label: 0 (Wake)
+- Last label: 1 (N1)
+
+The dataset label matches the last epoch, not the centre epoch.
+
+**Effect on the pipeline:**
+The model is trained against a label belonging to a different epoch from the representation selected by its classification head. This introduces incorrect training targets.
+
+**Correction:**
+Use `i + SEQ_LEN // 2` for the target in `SeqDataset.__getitem__`, the invalid-target filter, and the training-label count calculation.
+
+**Decision:**
+The centre epoch is the intended prediction target, consistent with the model documentation and output head.
