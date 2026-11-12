@@ -1,0 +1,30 @@
+Using default location ~/mne_data for PHYSIONET_SLEEP...
+/content/Assignment/task2/original/sleep_pipeline.py:56: RuntimeWarning: Requested recording 2 for subject 13, but it is not available in corpus.
+  return fetch_data(subjects=subjects, recording=[1, 2], on_missing="warn")
+/content/Assignment/task2/original/sleep_pipeline.py:141: UserWarning: enable_nested_tensor is True, but self.use_nested_tensor is False because encoder_layer.self_attn.batch_first was not True(use batch_first for better inference performance)
+  self.transformer = nn.TransformerEncoder(layer, num_layers=2)
+train recordings: 24  test recordings: 5
+train label counts: {'W': 45332, 'N1': 1902, 'N2': 10850, 'N3': 3354, 'REM': 4628}
+epoch  0  loss 0.529  macro-F1 0.525
+epoch  1  loss 0.623  macro-F1 0.572
+epoch  2  loss 0.495  macro-F1 0.542
+epoch  3  loss 0.870  macro-F1 0.586
+epoch  4  loss 0.533  macro-F1 0.570
+epoch  5  loss 0.812  macro-F1 0.572
+epoch  6  loss 0.397  macro-F1 0.620
+epoch  7  loss 1.103  macro-F1 0.626
+epoch  8  loss 0.412  macro-F1 0.610
+epoch  9  loss 0.519  macro-F1 0.590
+epoch 10  loss 0.350  macro-F1 0.573
+epoch 11  loss 1.050  macro-F1 0.624
+
+=== held-out results ===
+accuracy 0.840
+macro-F1 0.626
+kappa    0.684
+per-class F1: {'W': 0.95, 'N1': 0.193, 'N2': 0.719, 'N3': 0.681, 'REM': 0.587}
+[[8813  422  238   21  172]
+ [  34  128   84   10   26]
+ [  25  308 1660   97  200]
+ [   6    4  212  387   12]
+ [  10  185  134    0  526]]
