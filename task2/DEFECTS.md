@@ -122,3 +122,13 @@ Use batch_first=True to match the (B, L, d) tensor format produced by the epoch 
 **Impact:** Independent epoch-wise normalisation can suppress amplitude-related characteristics of sleep stages, particularly the prominent slow-wave activity associated with N3 sleep.
 
 **Correction:** Replaced per-epoch standardisation with per-recording, per-channel standardisation across epochs and time samples. This preserves relative amplitude variation within each recording and channel.
+
+### Defect 7: Recording-level train/test split causes subject leakage
+
+**Problem:** The original pipeline randomly divided individual recordings into training and testing sets. Since participants can have two recordings corresponding to different nights, recordings from the same participant could appear in both sets.
+
+**Evidence:** Reproducing the original split produced 24 training recordings and 5 testing recordings. All five test subjects (05, 07, 09, 10 and 11) also appeared in the training set.
+
+**Impact:** The model may learn participant-specific characteristics during training and benefit from their presence in the test set. Consequently, the evaluation may overestimate generalisation to previously unseen participants.
+
+**Correction:** Replaced recording-level splitting with subject-level splitting. All recordings belonging to a selected test subject are assigned to the test set, while recordings from the remaining subjects are assigned to training. Verification confirmed zero subject overlap.
