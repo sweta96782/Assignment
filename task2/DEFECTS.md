@@ -102,3 +102,13 @@ Repeat the batch-versus-individual prediction experiment. The maximum prediction
 
 **Decision:**
 Use batch_first=True to match the (B, L, d) tensor format produced by the epoch encoder.
+
+### Defect 5: Positional encoding applied after the Transformer
+
+**Problem:** The positional encoding was added after the Transformer encoder. Consequently, the self-attention layers received epoch embeddings without positional information and could not properly distinguish their temporal positions.
+
+**Evidence:** A sequence-reversal experiment was conducted using the model in evaluation mode. After correcting the positional encoding order, reversing the input sequence changed the model output, producing a maximum prediction difference of 0.00325775. This indicates that positional information is now influencing the model's output.
+
+**Impact:** Without positional encoding before self-attention, the model cannot effectively learn the temporal order of sleep epochs. This can limit its ability to capture sleep-stage transitions and temporal dependencies.
+
+**Correction:** Positional encoding was moved before the Transformer encoder so that temporal position information is available during self-attention.

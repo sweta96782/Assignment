@@ -152,8 +152,8 @@ class SleepTransformer(nn.Module):
     def forward(self, x):                      # x: (B, L, C, T)
         B, L = x.shape[:2]
         z = self.encoder(x.flatten(0, 1)).view(B, L, -1)
-        z = self.transformer(z)
         z = self.pos(z)
+        z = self.transformer(z)
         return self.head(z[:, L // 2])
 
 
