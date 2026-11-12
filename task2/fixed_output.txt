@@ -1,0 +1,28 @@
+Using default location ~/mne_data for PHYSIONET_SLEEP...
+/content/Assignment/task2/sleep_pipeline.py:56: RuntimeWarning: Requested recording 2 for subject 13, but it is not available in corpus.
+  return fetch_data(subjects=subjects, recording=[1, 2], on_missing="warn")
+train recordings: 24  test recordings: 5
+train label counts: {'W': 9126, 'N1': 1722, 'N2': 10731, 'N3': 3291, 'REM': 3892}
+epoch  0  loss 0.499  macro-F1 0.693
+epoch  1  loss 0.207  macro-F1 0.764
+epoch  2  loss 0.251  macro-F1 0.782
+epoch  3  loss 0.332  macro-F1 0.741
+epoch  4  loss 0.300  macro-F1 0.738
+epoch  5  loss 0.246  macro-F1 0.750
+epoch  6  loss 0.609  macro-F1 0.772
+epoch  7  loss 0.701  macro-F1 0.792
+epoch  8  loss 0.483  macro-F1 0.641
+epoch  9  loss 0.179  macro-F1 0.782
+epoch 10  loss 0.203  macro-F1 0.780
+epoch 11  loss 0.496  macro-F1 0.815
+
+=== held-out results ===
+accuracy 0.888
+macro-F1 0.815
+kappa    0.829
+per-class F1: {'W': 0.956, 'N1': 0.595, 'N2': 0.831, 'N3': 0.822, 'REM': 0.871}
+[[3555   26    5   19    0]
+ [  33  161   51    2   11]
+ [ 225   79 1746   80  108]
+ [  10    2  104  500    0]
+ [  11   15   59    0  690]]
