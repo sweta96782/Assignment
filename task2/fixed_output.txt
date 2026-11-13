@@ -1,28 +1,33 @@
 Using default location ~/mne_data for PHYSIONET_SLEEP...
+Using default location ~/mne_data for PHYSIONET_SLEEP...
 /content/Assignment/task2/sleep_pipeline.py:56: RuntimeWarning: Requested recording 2 for subject 13, but it is not available in corpus.
   return fetch_data(subjects=subjects, recording=[1, 2], on_missing="warn")
-train recordings: 24  test recordings: 5
-train label counts: {'W': 9126, 'N1': 1722, 'N2': 10731, 'N3': 3291, 'REM': 3892}
-epoch  0  loss 0.499  macro-F1 0.693
-epoch  1  loss 0.207  macro-F1 0.764
-epoch  2  loss 0.251  macro-F1 0.782
-epoch  3  loss 0.332  macro-F1 0.741
-epoch  4  loss 0.300  macro-F1 0.738
-epoch  5  loss 0.246  macro-F1 0.750
-epoch  6  loss 0.609  macro-F1 0.772
-epoch  7  loss 0.701  macro-F1 0.792
-epoch  8  loss 0.483  macro-F1 0.641
-epoch  9  loss 0.179  macro-F1 0.782
-epoch 10  loss 0.203  macro-F1 0.780
-epoch 11  loss 0.496  macro-F1 0.815
+Training subjects: [0, 1, 2, 3, 4, 5, 6, 9, 10, 11, 12, 14]
+Testing subjects: [7, 8, 13]
+Training recordings: 24
+Testing recordings: 5
+Subject overlap: set()
+train label counts: {'W': 10022, 'N1': 1673, 'N2': 11114, 'N3': 2770, 'REM': 3921}
+epoch  0  loss 0.345  macro-F1 0.619
+epoch  1  loss 0.439  macro-F1 0.771
+epoch  2  loss 0.260  macro-F1 0.792
+epoch  3  loss 0.734  macro-F1 0.809
+epoch  4  loss 0.499  macro-F1 0.762
+epoch  5  loss 0.340  macro-F1 0.793
+epoch  6  loss 0.137  macro-F1 0.786
+epoch  7  loss 0.431  macro-F1 0.768
+epoch  8  loss 0.263  macro-F1 0.802
+epoch  9  loss 0.180  macro-F1 0.806
+epoch 10  loss 0.375  macro-F1 0.803
+epoch 11  loss 0.208  macro-F1 0.815
 
 === held-out results ===
-accuracy 0.888
+accuracy 0.889
 macro-F1 0.815
-kappa    0.829
-per-class F1: {'W': 0.956, 'N1': 0.595, 'N2': 0.831, 'N3': 0.822, 'REM': 0.871}
-[[3555   26    5   19    0]
- [  33  161   51    2   11]
- [ 225   79 1746   80  108]
- [  10    2  104  500    0]
- [  11   15   59    0  690]]
+kappa    0.847
+per-class F1: {'W': 0.979, 'N1': 0.503, 'N2': 0.845, 'N3': 0.887, 'REM': 0.861}
+[[2647   44    4    2   12]
+ [  33  187   49    0   38]
+ [   5  154 1518  102   76]
+ [   1   14  131  990    1]
+ [  10   38   38    0  660]]

@@ -173,11 +173,22 @@ def predict(model, ds):
 
 def main():
     set_seed(SEED)
-    files = get_files(SUBJECTS)
-    random.Random(SEED).shuffle(files)
-    n_test = max(1, int(0.2 * len(files)))
-    test_files, train_files = files[:n_test], files[n_test:]
-    print(f"train recordings: {len(train_files)}  test recordings: {len(test_files)}")
+    # Correct subject-independent train/test split
+    subjects = list(SUBJECTS)
+    random.Random(SEED).shuffle(subjects)
+
+    n_test = max(1, int(0.2 * len(subjects)))
+    test_subjects = subjects[:n_test]
+    train_subjects = subjects[n_test:]
+
+    train_files = get_files(train_subjects)
+    test_files = get_files(test_subjects)
+
+    print("Training subjects:", sorted(train_subjects))
+    print("Testing subjects:", sorted(test_subjects))
+    print("Training recordings:", len(train_files))
+    print("Testing recordings:", len(test_files))
+    print("Subject overlap:", set(train_subjects) & set(test_subjects))
 
     train_ds = SeqDataset([load_recording(*f) for f in train_files])
     test_ds = SeqDataset([load_recording(*f) for f in test_files])
