@@ -1,0 +1,61 @@
+/content/Assignment/task2
+==============================================================================
+TASK 2b — IMPACT LEDGER
+Fixed pipeline: /content/Assignment/task2/sleep_pipeline.py
+Baseline seeds: [0, 21, 42]
+Three-seed defects: D1, D4 and D7
+The original fixed pipeline will not be modified.
+==============================================================================
+Completed BASELINE seed= 0 | Acc=0.902 Macro-F1=0.837 Kappa=0.859 subject overlap=set()
+Completed BASELINE seed=21 | Acc=0.887 Macro-F1=0.811 Kappa=0.846 subject overlap=set()
+Completed BASELINE seed=42 | Acc=0.889 Macro-F1=0.815 Kappa=0.847 subject overlap=set()
+Completed D1       seed=42 | Acc=0.940 Macro-F1=0.829 Kappa=0.882 subject overlap=set()
+Completed D1       seed= 0 | Acc=0.932 Macro-F1=0.804 Kappa=0.875 subject overlap=set()
+Completed D1       seed=21 | Acc=0.916 Macro-F1=0.776 Kappa=0.827 subject overlap=set()
+Completed D2       seed=42 | Acc=0.891 Macro-F1=0.816 Kappa=0.851 subject overlap=set()
+Completed D3       seed=42 | Acc=0.883 Macro-F1=0.811 Kappa=0.841 subject overlap=set()
+Completed D4       seed=42 | Acc=0.872 Macro-F1=0.790 Kappa=0.824 subject overlap=set()
+Completed D4       seed= 0 | Acc=0.844 Macro-F1=0.749 Kappa=0.777 subject overlap=set()
+Completed D4       seed=21 | Acc=0.856 Macro-F1=0.769 Kappa=0.807 subject overlap=set()
+Completed D5       seed=42 | Acc=0.890 Macro-F1=0.813 Kappa=0.850 subject overlap=set()
+Completed D6       seed=42 | Acc=0.881 Macro-F1=0.808 Kappa=0.836 subject overlap=set()
+Completed D7       seed=42 | Acc=0.888 Macro-F1=0.815 Kappa=0.829 subject overlap={5, 7, 9, 10, 11}
+Completed D7       seed= 0 | Acc=0.823 Macro-F1=0.746 Kappa=0.761 subject overlap={1, 2, 5, 8, 11}
+Completed D7       seed=21 | Acc=0.896 Macro-F1=0.825 Kappa=0.852 subject overlap={1, 2, 5, 7, 12}
+
+PAIRED SEED-LEVEL DIFFERENCES
+Δ = defective result − fixed result at the same seed.
+| Defect | Seed | Δ Accuracy (pp) | Δ Macro-F1 | Δ Kappa | Subject overlap |
+| --- | --- | --- | --- | --- | --- |
+| D1 | 42 | +5.10 | +0.014 | +0.035 | set() |
+| D1 | 0 | +3.00 | -0.033 | +0.016 | set() |
+| D1 | 21 | +2.90 | -0.035 | -0.019 | set() |
+| D2 | 42 | +0.20 | +0.001 | +0.004 | set() |
+| D3 | 42 | -0.60 | -0.004 | -0.006 | set() |
+| D4 | 42 | -1.70 | -0.025 | -0.023 | set() |
+| D4 | 0 | -5.80 | -0.088 | -0.082 | set() |
+| D4 | 21 | -3.10 | -0.042 | -0.039 | set() |
+| D5 | 42 | +0.10 | -0.002 | +0.003 | set() |
+| D6 | 42 | -0.80 | -0.007 | -0.011 | set() |
+| D7 | 42 | -0.10 | +0.000 | -0.018 | {5, 7, 9, 10, 11} |
+| D7 | 0 | -7.90 | -0.091 | -0.098 | {1, 2, 5, 8, 11} |
+| D7 | 21 | +0.90 | +0.014 | +0.006 | {1, 2, 5, 7, 12} |
+
+FINAL IMPACT LEDGER — RANKED BY MEAN ABSOLUTE METRIC CHANGE
+Impact index = mean absolute Δ across the three metrics after converting each to percentage-point units.
+| Rank | Defect | Δ Accuracy (pp) | Δ Macro-F1 | Δ Kappa | Impact index | Predicted direction | Mechanism | Interaction |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| 1 | D4 | -3.53 | -0.052 | -0.048 | 4.50 | Expected to reduce performance | Input is (batch, sequence, features), but batch_first=False makes the Transformer interpret the batch dimension as sequence. | Not tested by one-defect-at-a-time runs |
+| 2 | D7 | -2.37 | -0.026 | -0.037 | 2.87 | Expected to make reported performance overly optimistic | Recordings are split independently, allowing the same participant to contribute recordings to training and testing. | Not tested by one-defect-at-a-time runs |
+| 3 | D1 | +3.67 | -0.018 | +0.011 | 2.18 | May raise or lower scores; expected to reduce reliability | 500 is used instead of 500e-6. Since EEG is represented in volts, this threshold is far too permissive and electrode-pop epochs are retained. | Not tested by one-defect-at-a-time runs |
+| 4 | D6 | -0.80 | -0.007 | -0.011 | 0.87 | May change performance; may remove useful scale information | Normalisation over axes (1, 2) standardises each epoch across channels and time, instead of using the fixed pipeline's axes (0, 2). | Not tested by one-defect-at-a-time runs |
+| 5 | D3 | -0.60 | -0.004 | -0.006 | 0.53 | Expected to reduce performance | Each sequence is paired with its final epoch label rather than its centre label, misaligning the input context and prediction target. | Not tested by one-defect-at-a-time runs |
+| 6 | D2 | +0.20 | +0.001 | +0.004 | 0.23 | May inflate Wake performance and distort other classes | Unmapped/unscored epochs are assigned label 0 (Wake) rather than -1, so they become valid Wake training examples. | Not tested by one-defect-at-a-time runs |
+| 7 | D5 | +0.10 | -0.002 | +0.003 | 0.20 | Expected to reduce temporal modelling effectiveness | Self-attention receives epoch embeddings without positional information; adding positional encoding afterward cannot inform the attention operation. | Not tested by one-defect-at-a-time runs |
+
+NOTES FOR INTERPRETATION
+- Positive Δ means the defective pipeline scored higher; it does not mean the defect is beneficial.
+- D7 changes the split unit. Its test set may include participants also present in training. Its score is therefore leakage-contaminated and is not a valid subject-independent result.
+- The isolated-defect experiments cannot establish whether an effect vanishes or flips after another defect is fixed. That requires additional paired runs with selected combinations of two defects. Do not claim an interaction unless those combination runs are performed.
+- Full run logs: /content/Assignment/task2/impact_ledger_logs
+- The original fixed pipeline was not modified.
