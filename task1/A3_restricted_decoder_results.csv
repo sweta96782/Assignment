@@ -1,0 +1,3 @@
+route,test_trials,correct_predictions,accuracy_percent,chance_threshold_correct,chance_threshold_accuracy_percent,binomial_p_value
+visual,360,194,53.888888888888886,197,54.72222222222223,0.07731559355272198
+ocular,360,199,55.27777777777778,197,54.72222222222223,0.02550830558559922
