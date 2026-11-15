@@ -1,0 +1,4 @@
+Experiment,Training_subjects,Seeds,Prediction
+B2.1 Data scaling,5,3,EEGNet will outperform the Transformer with very limited training data.
+B2.1 Data scaling,20,3,Both models will improve as more training subjects become available.
+B2.1 Data scaling,32,3,"EEGNet will retain an advantage, while the Transformer may benefit more from increased data."

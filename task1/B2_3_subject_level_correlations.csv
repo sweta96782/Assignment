@@ -1,0 +1,16 @@
+model_accuracy,predictor,spearman_rho,exact_p_two_sided
+EEGNet_acc,LI_median_mu,-0.627,0.106
+EEGNet_acc,LI_median_beta,-0.53,0.1837
+EEGNet_acc,LI_median_mu_beta_mean,-0.675,0.0756
+EEGNet_acc,A3_visual_acc,0.463,0.2469
+EEGNet_acc,A3_ocular_acc,0.339,0.3981
+Transformer_best_acc,LI_median_mu,-0.524,0.1966
+Transformer_best_acc,LI_median_beta,-0.262,0.5364
+Transformer_best_acc,LI_median_mu_beta_mean,-0.571,0.1511
+Transformer_best_acc,A3_visual_acc,0.554,0.1647
+Transformer_best_acc,A3_ocular_acc,0.036,0.9434
+Transformer_3seeds_acc,LI_median_mu,-0.619,0.115
+Transformer_3seeds_acc,LI_median_beta,-0.595,0.1323
+Transformer_3seeds_acc,LI_median_mu_beta_mean,-0.69,0.0694
+Transformer_3seeds_acc,A3_visual_acc,0.494,0.2171
+Transformer_3seeds_acc,A3_ocular_acc,0.347,0.3967

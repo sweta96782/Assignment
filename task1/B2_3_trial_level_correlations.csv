@@ -1,0 +1,9 @@
+model,trial_predictor,pooled_within_subject_rho,p,n_subjects
+EEGNet,LI_mu,-0.057,0.2969,8
+EEGNet,LI_beta,0.114,0.0357,8
+EEGNet,visual_evidence,0.063,0.2479,8
+EEGNet,ocular_evidence,-0.029,0.5931,8
+Transformer_best,LI_mu,-0.017,0.7564,8
+Transformer_best,LI_beta,0.085,0.1179,8
+Transformer_best,visual_evidence,0.159,0.0033,8
+Transformer_best,ocular_evidence,0.004,0.9431,8
