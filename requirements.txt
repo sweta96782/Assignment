@@ -1,13 +1,12 @@
-# Core scientific Python stack used by Task 1 and Task 2
-numpy
-pandas
+# Package versions recorded from the assignment environment
+mne==1.13.2
+tensorflow==2.21.0
+scikit-learn==1.6.1
+numpy==2.4.6
+pandas==2.2.3
+
+# Additional dependencies used by the notebooks and Task 2 pipeline
 scipy
 matplotlib
-
-# EEG processing and machine learning
-mne
-scikit-learn
 statsmodels
-
-# Deep-learning models (EEGNet / Transformer / sleep-staging pipeline)
 torch
