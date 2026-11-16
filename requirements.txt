@@ -1,0 +1,13 @@
+# Core scientific Python stack used by Task 1 and Task 2
+numpy
+pandas
+scipy
+matplotlib
+
+# EEG processing and machine learning
+mne
+scikit-learn
+statsmodels
+
+# Deep-learning models (EEGNet / Transformer / sleep-staging pipeline)
+torch
